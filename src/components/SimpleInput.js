@@ -3,13 +3,20 @@ import { useState } from 'react';
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
 
+  const nameInputBlurHandler = () => {
+    setEnteredNameTouched(true);
+  };
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
+
+    setEnteredNameTouched(true);
 
     if (enteredName.trim() === '') {
       setEnteredNameIsValid(false);
@@ -21,9 +28,11 @@ const SimpleInput = (props) => {
     console.log(enteredName);
   };
 
-  const nameInputClasses = enteredNameIsValid 
-    ? 'form-control' 
-    : 'form-control invalid';
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
+  const nameInputClasses = nameInputIsInvalid
+    ? 'form-control invalid' 
+    : 'form-control';
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -33,8 +42,9 @@ const SimpleInput = (props) => {
                type='text' 
                id='name' 
                onChange={nameInputChangeHandler} 
+               onBlur={nameInputBlurHandler}
         />
-        {!enteredNameIsValid && <p className='error-text'>Field must not be empty</p>}
+        {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
