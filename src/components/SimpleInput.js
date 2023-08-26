@@ -10,7 +10,7 @@ const SimpleInput = (props) => {
   const enteredNameIsValid = enteredName.trim() !== '';
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
-  const enteredMailIsValid = enteredMail.trim() !== '';
+  const enteredMailIsValid = enteredMail.includes('@');
   const mailInputIsInvalid = !enteredMailIsValid && enteredMailTouched;
 
   useEffect(() => {
@@ -48,14 +48,18 @@ const SimpleInput = (props) => {
 
     setEnteredNameTouched(true);
 
-    if (!enteredNameIsValid) {
+    if (!enteredNameIsValid && !enteredMailIsValid) {
       return;
     }
 
     console.log(enteredName);
+    console.log(enteredMail);
 
     setEnteredName('');
     setEnteredNameTouched(false);
+
+    setEnteredMail('');
+    setEnteredMailTouched(false);
   };
 
   const nameInputClasses = nameInputIsInvalid && mailInputIsInvalid
@@ -65,24 +69,26 @@ const SimpleInput = (props) => {
   return (
     <form onSubmit={formSubmissionHandler}>
       <div className={nameInputClasses}>
-        <label htmlFor='name'>Your Name</label>
+        <label htmlFor='name'>Your name</label>
         <input
                type='text' 
                id='name' 
                onChange={nameInputChangeHandler} 
                onBlur={nameInputBlurHandler}
+               value={enteredName}
         />
         {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
       </div>
       <div className={nameInputClasses}>
-        <label htmlFor='name'>E-mail</label>
+        <label htmlFor='email'>Your e-mail</label>
         <input
-               type='text' 
+               type='email' 
                id='e-mail' 
                onChange={mailInputChangeHandler} 
                onBlur={mailInputBlurHandler}
+               value={enteredMail}
         />
-        {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
+        {mailInputIsInvalid && <p className='error-text'>Please, enter a valid e-mail</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button> 
