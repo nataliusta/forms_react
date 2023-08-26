@@ -3,25 +3,44 @@ import { useEffect, useState } from 'react';
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  const [enteredMail, setEnteredMail] = useState('');
+  const [enteredMailTouched, setEnteredMailTouched] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
   const enteredNameIsValid = enteredName.trim() !== '';
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
+  const enteredMailIsValid = enteredMail.trim() !== '';
+  const mailInputIsInvalid = !enteredMailIsValid && enteredMailTouched;
+
   useEffect(() => {
-    if (enteredNameIsValid) {
+    if (enteredNameIsValid && enteredMailIsValid) {
       setFormIsValid(true);
     } else {
       setFormIsValid(false);
     }
-  }, [enteredNameIsValid]);
+  }, [enteredNameIsValid, enteredMailIsValid]);
 
-  const nameInputChangeHandler = (event) => {
+  /*let formIsValid = false;
+
+  if (enteredNameIsValid) {
+    formIsValid = true;
+  }*/
+
+  const nameInputChangeHandler = (event) => { // name
     setEnteredName(event.target.value);
   };
 
-  const nameInputBlurHandler = (event) => {
+  const nameInputBlurHandler = (event) => { // name blur
     setEnteredNameTouched(true);
+  };
+
+  const mailInputChangeHandler = (event) => { // mail
+    setEnteredMail(event.target.value);
+  };
+
+  const mailInputBlurHandler = (event) => { // mail blur
+    setEnteredMailTouched(true);
   };
 
   const formSubmissionHandler = (event) => {
@@ -39,7 +58,7 @@ const SimpleInput = (props) => {
     setEnteredNameTouched(false);
   };
 
-  const nameInputClasses = nameInputIsInvalid
+  const nameInputClasses = nameInputIsInvalid && mailInputIsInvalid
     ? 'form-control invalid' 
     : 'form-control';
 
@@ -55,8 +74,18 @@ const SimpleInput = (props) => {
         />
         {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
       </div>
+      <div className={nameInputClasses}>
+        <label htmlFor='name'>E-mail</label>
+        <input
+               type='text' 
+               id='e-mail' 
+               onChange={mailInputChangeHandler} 
+               onBlur={mailInputBlurHandler}
+        />
+        {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
+      </div>
       <div className="form-actions">
-        <button disabled={!formIsValid}>Submit</button>
+        <button>Submit</button> 
       </div>
     </form>
   );
