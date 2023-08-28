@@ -21,12 +21,7 @@ const SimpleInput = (props) => {
     reset: resetMailInput
   } = useInput(value => value.includes('@'));
 
-  //const [enteredMail, setEnteredMail] = useState('');
-  //const [enteredMailTouched, setEnteredMailTouched] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
-
-  //const enteredMailIsValid = enteredMail.includes('@');
-  //const mailInputIsInvalid = !enteredMailIsValid && enteredMailTouched;
 
   useEffect(() => {
     if (enteredNameIsValid && enteredMailIsValid) {
@@ -41,14 +36,6 @@ const SimpleInput = (props) => {
   if (enteredNameIsValid) {
     formIsValid = true;
   }*/
-
-  /*const mailInputChangeHandler = (event) => { // mail
-    setEnteredMail(event.target.value);
-  };
-
-  const mailInputBlurHandler = (event) => { // mail blur
-    setEnteredMailTouched(true);
-  };*/
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
