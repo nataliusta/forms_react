@@ -62,9 +62,13 @@ const SimpleInput = (props) => {
     setEnteredMailTouched(false);
   };
 
-  const nameInputClasses = nameInputIsInvalid && mailInputIsInvalid
+  const nameInputClasses = nameInputIsInvalid
     ? 'form-control invalid' 
     : 'form-control';
+
+  const mailInputClasses = mailInputIsInvalid
+  ? 'form-control invalid' 
+  : 'form-control';
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -79,7 +83,7 @@ const SimpleInput = (props) => {
         />
         {nameInputIsInvalid && <p className='error-text'>Field must not be empty</p>}
       </div>
-      <div className={nameInputClasses}>
+      <div className={mailInputClasses}>
         <label htmlFor='email'>Your e-mail</label>
         <input
                type='email' 
